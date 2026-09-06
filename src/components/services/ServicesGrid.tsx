@@ -2,31 +2,27 @@
 
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { getServiceCardVariants, getServicesContainerVariants, getServicesHeadingVariants } from "@/lib/motion";
-import type { PriceCategory, ServicesContent } from "./services-content";
+import type { PriceEntry, ServicesContent } from "./services-content";
 
 type ServicesGridProps = {
   content: ServicesContent;
 };
 
-function PriceList({ category, rowVariants }: { category: PriceCategory; rowVariants: Variants }) {
+function PriceRow({ item, rowVariants }: { item: PriceEntry; rowVariants: Variants }) {
   return (
-    <div>
-      <h3 className="font-display text-2xl font-semibold">{category.title}</h3>
-      <span className="mt-2 block h-px w-10 rule-signature" aria-hidden="true" />
-
-      <ul className="mt-6 flex flex-col">
-        {category.items.map((item) => (
-          <motion.li
-            key={item.label}
-            variants={rowVariants}
-            className="flex items-baseline justify-between gap-4 border-b border-bone/10 py-4"
-          >
-            <span className="font-body text-base text-bone">{item.label}</span>
-            <span className="font-display text-lg font-semibold text-bone">{item.price}</span>
-          </motion.li>
-        ))}
-      </ul>
-    </div>
+    <motion.li
+      variants={rowVariants}
+      className="group relative flex items-baseline justify-between gap-4 border-b border-bone/10 py-4 pl-4"
+    >
+      <span
+        className="absolute inset-y-0 left-0 w-0.5 origin-top scale-y-0 rule-signature transition-transform duration-300 ease-out group-hover:scale-y-100"
+        aria-hidden="true"
+      />
+      <span className="font-body text-base text-bone">{item.label}</span>
+      <span className="bg-clip-text font-display text-lg font-semibold text-bone transition-colors duration-300 group-hover:bg-[linear-gradient(100deg,#8b5cf6_0%,#d6318f_52%,#ff8a3c_100%)] group-hover:text-transparent">
+        {item.price}
+      </span>
+    </motion.li>
   );
 }
 
@@ -38,6 +34,9 @@ export function ServicesGrid({ content }: ServicesGridProps) {
   const rowVariants = getServiceCardVariants(shouldReduceMotion);
 
   const [textiles, logo] = content.categories;
+  const midpoint = Math.ceil(textiles.items.length / 2);
+  const textilesLeft = textiles.items.slice(0, midpoint);
+  const textilesRight = textiles.items.slice(midpoint);
 
   return (
     <>
@@ -66,14 +65,35 @@ export function ServicesGrid({ content }: ServicesGridProps) {
         whileInView="visible"
         viewport={{ once: true, amount: 0.1 }}
         variants={containerVariants}
-        className="mt-14 grid grid-cols-1 gap-12 lg:grid-cols-12"
+        className="mt-14 flex flex-col gap-16"
       >
-        <div className="lg:col-span-7">
-          <PriceList category={textiles} rowVariants={rowVariants} />
+        <div>
+          <h3 className="font-display text-2xl font-semibold">{textiles.title}</h3>
+          <span className="mt-2 block h-px w-10 rule-signature" aria-hidden="true" />
+
+          <div className="mt-6 grid grid-cols-1 gap-x-12 sm:grid-cols-2">
+            <ul className="flex flex-col">
+              {textilesLeft.map((item) => (
+                <PriceRow key={item.label} item={item} rowVariants={rowVariants} />
+              ))}
+            </ul>
+            <ul className="flex flex-col">
+              {textilesRight.map((item) => (
+                <PriceRow key={item.label} item={item} rowVariants={rowVariants} />
+              ))}
+            </ul>
+          </div>
         </div>
 
-        <div className="lg:col-span-5">
-          <PriceList category={logo} rowVariants={rowVariants} />
+        <div className="max-w-xl">
+          <h3 className="font-display text-2xl font-semibold">{logo.title}</h3>
+          <span className="mt-2 block h-px w-10 rule-signature" aria-hidden="true" />
+
+          <ul className="mt-6 flex flex-col">
+            {logo.items.map((item) => (
+              <PriceRow key={item.label} item={item} rowVariants={rowVariants} />
+            ))}
+          </ul>
 
           <div className="mt-10 flex flex-col gap-3">
             {content.footnotes.map((note) => (

@@ -10,7 +10,7 @@ type HeroMarkProps = {
 
 export function HeroMark({ graphicVariants, shouldReduceMotion, trustLine }: HeroMarkProps) {
   return (
-    <div className="relative mt-10 lg:mt-0">
+    <div className="relative mt-10 flex flex-col items-center text-center lg:mt-0">
       {/* w-fit : sans ça un span/p en display:block s'étire sur toute la largeur du
           conteneur, et le dégradé 0-100% se dilue sur cette largeur invisible au lieu
           de suivre le tracé réel du glyphe — d'où un rendu presque uniformément violet. */}
@@ -33,7 +33,7 @@ export function HeroMark({ graphicVariants, shouldReduceMotion, trustLine }: Her
         by BREO
       </motion.p>
 
-      <div className="mt-6">
+      <div className="mt-6 flex flex-col items-center">
         <FranceMap
           shouldReduceMotion={shouldReduceMotion}
           startDelay={0.65}
@@ -44,7 +44,7 @@ export function HeroMark({ graphicVariants, shouldReduceMotion, trustLine }: Her
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, ease: EASE_OUT_SOFT, delay: 1.35 }}
-            className="mt-3 font-body text-xs uppercase tracking-[0.2em] text-bone-dim"
+            className="mt-3 text-center font-body text-xs uppercase tracking-[0.2em] text-bone-dim"
           >
             {trustLine}
           </motion.p>

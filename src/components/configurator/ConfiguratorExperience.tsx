@@ -17,11 +17,11 @@ export function ConfiguratorExperience() {
   const hasWebGL = useHasWebGL();
 
   return (
-    <section className="grain relative isolate min-h-screen overflow-hidden bg-ink px-6 py-16 sm:px-10 lg:py-20">
+    <section className="grain relative isolate overflow-hidden bg-ink px-6 py-10 sm:px-10 lg:py-14">
       <ConfiguratorProvider>
         <div className="mx-auto flex max-w-6xl flex-col gap-10 lg:flex-row">
           <ControlPanel content={CONFIGURATOR_CONTENT} />
-          <div className="relative h-[420px] w-full overflow-hidden rounded-3xl border border-bone/10 lg:h-[640px]">
+          <div className="relative h-85 w-full overflow-hidden rounded-3xl border border-bone/10 sm:h-105 lg:h-120">
             {hasWebGL ? (
               <ConfiguratorErrorBoundary>
                 <Canvas3D />
