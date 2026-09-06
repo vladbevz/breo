@@ -46,8 +46,10 @@ export function Hero() {
         <HeroActions
           primaryCta={HERO_CONTENT.primaryCta}
           secondaryCta={HERO_CONTENT.secondaryCta}
+          tiktok={HERO_CONTENT.tiktok}
           trustLine={HERO_CONTENT.trustLine}
           actionsVariants={actionsVariants}
+          shouldReduceMotion={shouldReduceMotion}
         />
       </motion.div>
 
