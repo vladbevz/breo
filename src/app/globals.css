@@ -55,6 +55,30 @@ body {
   );
 }
 
+/* Trait de contour en dégradé (1px), jamais un fond plein — pour un état de survol/focus discret. */
+.ring-signature {
+  position: relative;
+}
+.ring-signature::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    100deg,
+    var(--color-violet-text) 0%,
+    var(--color-magenta) 52%,
+    var(--color-orange) 100%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
 /* Grain subtil évoquant le textile — superposé en overlay, jamais seul */
 .grain::before {
   content: "";

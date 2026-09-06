@@ -74,3 +74,43 @@ export function getHeroMarkVariants(shouldReduceMotion: boolean): Variants {
     },
   };
 }
+
+export function getServicesHeadingVariants(shouldReduceMotion: boolean): Variants {
+  return {
+    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 18 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: shouldReduceMotion ? 0.3 : 0.6, ease: EASE_OUT_SOFT },
+    },
+  };
+}
+
+export function getServicesContainerVariants(shouldReduceMotion: boolean): Variants {
+  return {
+    hidden: {},
+    visible: {
+      transition: shouldReduceMotion
+        ? { staggerChildren: 0.06 }
+        : { staggerChildren: 0.09, delayChildren: 0.1 },
+    },
+  };
+}
+
+export function getServiceCardVariants(shouldReduceMotion: boolean): Variants {
+  if (shouldReduceMotion) {
+    return {
+      hidden: { opacity: 0 },
+      visible: { opacity: 1, transition: { duration: 0.3, ease: EASE_OUT_SOFT } },
+    };
+  }
+  return {
+    hidden: { opacity: 0, y: 28, scale: 0.98 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: { duration: 0.6, ease: EASE_OUT_SOFT },
+    },
+  };
+}
