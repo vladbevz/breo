@@ -46,6 +46,7 @@ export function Hero() {
         <HeroActions
           primaryCta={HERO_CONTENT.primaryCta}
           tiktokCta={HERO_CONTENT.tiktokCta}
+          configuratorCta={HERO_CONTENT.configuratorCta}
           actionsVariants={actionsVariants}
         />
       </motion.div>

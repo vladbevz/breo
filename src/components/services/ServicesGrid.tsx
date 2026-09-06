@@ -1,26 +1,43 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
-import {
-  getServiceCardVariants,
-  getServicesContainerVariants,
-  getServicesHeadingVariants,
-} from "@/lib/motion";
-import { ServiceCard } from "./ServiceCard";
-import type { ServicesContent } from "./services-content";
+import { motion, useReducedMotion, type Variants } from "framer-motion";
+import { getServiceCardVariants, getServicesContainerVariants, getServicesHeadingVariants } from "@/lib/motion";
+import type { PriceCategory, ServicesContent } from "./services-content";
 
 type ServicesGridProps = {
   content: ServicesContent;
 };
+
+function PriceList({ category, rowVariants }: { category: PriceCategory; rowVariants: Variants }) {
+  return (
+    <div>
+      <h3 className="font-display text-2xl font-semibold">{category.title}</h3>
+      <span className="mt-2 block h-px w-10 rule-signature" aria-hidden="true" />
+
+      <ul className="mt-6 flex flex-col">
+        {category.items.map((item) => (
+          <motion.li
+            key={item.label}
+            variants={rowVariants}
+            className="flex items-baseline justify-between gap-4 border-b border-bone/10 py-4"
+          >
+            <span className="font-body text-base text-bone">{item.label}</span>
+            <span className="font-display text-lg font-semibold text-bone">{item.price}</span>
+          </motion.li>
+        ))}
+      </ul>
+    </div>
+  );
+}
 
 export function ServicesGrid({ content }: ServicesGridProps) {
   const shouldReduceMotion = Boolean(useReducedMotion());
 
   const headingVariants = getServicesHeadingVariants(shouldReduceMotion);
   const containerVariants = getServicesContainerVariants(shouldReduceMotion);
-  const cardVariants = getServiceCardVariants(shouldReduceMotion);
+  const rowVariants = getServiceCardVariants(shouldReduceMotion);
 
-  const byId = Object.fromEntries(content.services.map((service) => [service.id, service]));
+  const [textiles, logo] = content.categories;
 
   return (
     <>
@@ -29,27 +46,19 @@ export function ServicesGrid({ content }: ServicesGridProps) {
         whileInView="visible"
         viewport={{ once: true, amount: 0.6 }}
         variants={headingVariants}
-        className="lg:grid lg:grid-cols-12 lg:items-end lg:gap-6"
       >
-        <div className="lg:col-span-8">
-          <p className="flex items-center gap-3 font-body text-xs tracking-[0.3em] text-bone-dim uppercase">
-            <span className="h-px w-8 rule-signature" aria-hidden="true" />
-            {content.eyebrow}
-          </p>
-          <h2 className="mt-6 font-display text-4xl leading-[1.05] font-semibold sm:text-5xl lg:text-6xl">
-            {content.heading.map((segment, index) => (
-              <span key={index} className={segment.accent ? "text-signature" : undefined}>
-                {segment.text}
-              </span>
-            ))}
-          </h2>
-          <p className="mt-6 max-w-xl font-body text-lg text-bone-dim">{content.intro}</p>
-        </div>
-
-        <div className="mt-8 lg:col-span-4 lg:col-start-9 lg:mt-0 lg:text-right">
-          <span className="ml-auto block h-px w-12 rule-signature" aria-hidden="true" />
-          <p className="mt-4 font-body text-sm text-bone-dim">{content.note}</p>
-        </div>
+        <p className="flex items-center gap-3 font-body text-xs tracking-[0.3em] text-bone-dim uppercase">
+          <span className="h-px w-8 rule-signature" aria-hidden="true" />
+          {content.eyebrow}
+        </p>
+        <h2 className="mt-6 max-w-2xl font-display text-4xl leading-[1.05] font-semibold sm:text-5xl lg:text-6xl">
+          {content.heading.map((segment, index) => (
+            <span key={index} className={segment.accent ? "text-signature" : undefined}>
+              {segment.text}
+            </span>
+          ))}
+        </h2>
+        <p className="mt-6 max-w-md font-body text-lg text-bone-dim">{content.intro}</p>
       </motion.div>
 
       <motion.div
@@ -57,44 +66,24 @@ export function ServicesGrid({ content }: ServicesGridProps) {
         whileInView="visible"
         viewport={{ once: true, amount: 0.1 }}
         variants={containerVariants}
-        className="mt-14 grid grid-cols-1 gap-5 lg:grid-cols-12 lg:gap-6"
+        className="mt-14 grid grid-cols-1 gap-12 lg:grid-cols-12"
       >
-        <ServiceCard
-          service={byId.flocage}
-          cardVariants={cardVariants}
-          shouldReduceMotion={shouldReduceMotion}
-          className="lg:col-span-7"
-        />
-        <ServiceCard
-          service={byId.flex}
-          cardVariants={cardVariants}
-          shouldReduceMotion={shouldReduceMotion}
-          className="lg:col-span-5"
-        />
-        <ServiceCard
-          service={byId.sublimation}
-          cardVariants={cardVariants}
-          shouldReduceMotion={shouldReduceMotion}
-          className="lg:col-span-5"
-        />
-        <ServiceCard
-          service={byId.broderie}
-          cardVariants={cardVariants}
-          shouldReduceMotion={shouldReduceMotion}
-          className="lg:col-span-4"
-        />
-        <ServiceCard
-          service={byId.travail}
-          cardVariants={cardVariants}
-          shouldReduceMotion={shouldReduceMotion}
-          className="lg:col-span-3"
-        />
-        <ServiceCard
-          service={byId.evenementiel}
-          cardVariants={cardVariants}
-          shouldReduceMotion={shouldReduceMotion}
-          className="lg:col-span-12"
-        />
+        <div className="lg:col-span-7">
+          <PriceList category={textiles} rowVariants={rowVariants} />
+        </div>
+
+        <div className="lg:col-span-5">
+          <PriceList category={logo} rowVariants={rowVariants} />
+
+          <div className="mt-10 flex flex-col gap-3">
+            {content.footnotes.map((note) => (
+              <p key={note} className="flex items-start gap-3 font-body text-sm text-bone-dim">
+                <span className="mt-2 h-1 w-1 shrink-0 rounded-full rule-signature" aria-hidden="true" />
+                {note}
+              </p>
+            ))}
+          </div>
+        </div>
       </motion.div>
     </>
   );

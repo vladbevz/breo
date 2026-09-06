@@ -6,6 +6,7 @@ export type HeroContent = {
   subheadline: string;
   primaryCta: { label: string; href: string };
   tiktokCta: { label: string; href: string };
+  configuratorCta: { label: string; href: string };
   trustLine?: string;
 };
 
@@ -20,5 +21,6 @@ export const HERO_CONTENT: HeroContent = {
     "T-shirts, sweats, vêtements de travail et textile événementiel — personnalisés et expédiés partout en France.",
   primaryCta: { label: "Demander un devis", href: "#contact" },
   tiktokCta: { label: "Voir nos réalisations", href: "https://www.tiktok.com/@flocage.by.breo" },
+  configuratorCta: { label: "Configurateur 3D", href: "/configurateur" },
   trustLine: "Expédition partout en France",
 };

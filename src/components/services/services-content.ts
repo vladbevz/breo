@@ -1,93 +1,47 @@
 export type ServiceTextSegment = { text: string; accent?: boolean };
 
-export type ServiceEntry = {
-  id: string;
-  index: string;
-  title: string;
-  /** Sous-chaîne exacte de `title` à mettre en avant via .text-signature (carte "featured" uniquement). */
-  accentWord?: string;
-  description: string;
-  techniques: string[];
-  fabrics?: string;
-  layout?: "featured" | "wide";
-};
+export type PriceEntry = { label: string; price: string };
+export type PriceCategory = { title: string; items: PriceEntry[] };
 
 export type ServicesContent = {
   eyebrow: string;
   heading: ServiceTextSegment[];
   intro: string;
-  note: string;
-  services: ServiceEntry[];
+  categories: PriceCategory[];
+  footnotes: string[];
 };
 
-// Copie provisoire — à valider avec le client avant mise en ligne.
+// Grille tarifaire fournie par le client — données réelles.
 export const SERVICES_CONTENT: ServicesContent = {
-  eyebrow: "Nos techniques de flocage",
+  eyebrow: "Nos tarifs",
   heading: [
-    { text: "Une technique pour " },
-    { text: "chaque projet", accent: true },
-    { text: "." },
+    { text: "Une grille " },
+    { text: "tarifaire", accent: true },
+    { text: " claire, sans surprise." },
   ],
-  intro:
-    "Flex, flocage, sublimation ou broderie : chaque technique est choisie selon votre textile, votre budget et le rendu recherché.",
-  note: "Tarifs communiqués sur devis, adaptés à la quantité et à la technique choisie.",
-  services: [
+  intro: "Le prix de chaque pièce floquée, en un coup d'œil.",
+  categories: [
     {
-      id: "flocage",
-      index: "01",
-      layout: "featured",
-      title: "Flocage velours",
-      accentWord: "Flocage",
-      description:
-        "La technique historique de l'atelier : un rendu texturé et velouté qui donne du relief au visuel, avec une excellente tenue au lavage.",
-      techniques: ["Effet velours", "Bonne tenue lavage", "Coloris unis"],
-      fabrics: "Coton, coton/polyester, sweat molletonné",
+      title: "Textiles & accessoires",
+      items: [
+        { label: "T-shirt", price: "15 €" },
+        { label: "Casquette", price: "15 €" },
+        { label: "Bonnet", price: "15 €" },
+        { label: "Polo", price: "20 €" },
+        { label: "T-shirt Premium", price: "20 €" },
+        { label: "Pull", price: "30 €" },
+        { label: "Pull à capuche", price: "35 €" },
+        { label: "Gilet sans manche", price: "50 €" },
+        { label: "Veste", price: "60 €" },
+      ],
     },
     {
-      id: "flex",
-      index: "02",
-      title: "Flex thermocollant",
-      description:
-        "Découpe vinyle collée à chaud : contours nets, coloris vifs, adapté aux petites séries et aux logos simples.",
-      techniques: ["Flex mat", "Flex brillant", "Flex pailleté"],
-      fabrics: "Coton, coton/élasthanne",
-    },
-    {
-      id: "sublimation",
-      index: "03",
-      title: "Sublimation textile",
-      description:
-        "Impression par transfert thermique sur fibres synthétiques : visuels grand format, dégradés et photos sans limite de couleurs.",
-      techniques: ["Full color", "Dégradés", "Grand format"],
-      fabrics: "Polyester, textile technique et sportif",
-    },
-    {
-      id: "broderie",
-      index: "04",
-      title: "Broderie",
-      description:
-        "Un fil qui s'inscrit dans la matière pour un rendu qualitatif et durable, particulièrement adapté aux logos d'entreprise.",
-      techniques: ["Fil mat ou brillant", "Rendu premium", "Petits logos"],
-      fabrics: "Polos, chemises, casquettes",
-    },
-    {
-      id: "travail",
-      index: "05",
-      title: "Vêtements de travail",
-      description:
-        "Personnalisation de tenues professionnelles résistantes, pensées pour un usage quotidien et une image de marque cohérente.",
-      techniques: ["Marquage multi-pièces", "Résistance renforcée"],
-      fabrics: "Softshell, treillis, haute visibilité",
-    },
-    {
-      id: "evenementiel",
-      index: "06",
-      layout: "wide",
-      title: "Textile événementiel et sportif",
-      description:
-        "Séries pour associations, clubs et événements : maillots, t-shirts et accessoires personnalisés en volume.",
-      techniques: ["Numérotation", "Marquage dos/manches", "Séries moyennes et grandes"],
-      fabrics: "Jersey sport, coton événementiel",
+      title: "Logo & design",
+      items: [
+        { label: "Création de logo", price: "50 €" },
+        { label: "Modification de logo", price: "20 €" },
+      ],
     },
   ],
+  footnotes: ["Tarifs dégressifs possibles pour les commandes en quantité.", "Devis gratuit sur demande."],
 };
