@@ -45,17 +45,18 @@ export function Hero() {
         <HeroHeadline content={HERO_CONTENT} lineVariants={lineVariants} />
         <HeroActions
           primaryCta={HERO_CONTENT.primaryCta}
-          secondaryCta={HERO_CONTENT.secondaryCta}
-          tiktok={HERO_CONTENT.tiktok}
-          trustLine={HERO_CONTENT.trustLine}
+          tiktokCta={HERO_CONTENT.tiktokCta}
           actionsVariants={actionsVariants}
-          shouldReduceMotion={shouldReduceMotion}
         />
       </motion.div>
 
       <div className="lg:col-span-6 lg:col-start-8 lg:-mr-10 xl:-mr-24">
         <motion.div style={{ y: markY }}>
-          <HeroMark graphicVariants={markVariants} />
+          <HeroMark
+            graphicVariants={markVariants}
+            shouldReduceMotion={shouldReduceMotion}
+            trustLine={HERO_CONTENT.trustLine}
+          />
         </motion.div>
       </div>
     </section>

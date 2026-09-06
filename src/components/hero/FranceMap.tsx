@@ -5,6 +5,7 @@ import { EASE_OUT_SOFT } from "@/lib/motion";
 type FranceMapProps = {
   shouldReduceMotion: boolean;
   className?: string;
+  startDelay?: number;
 };
 
 // Couleurs du dégradé signature dupliquées ici (les attributs de présentation SVG
@@ -15,12 +16,12 @@ const GRADIENT_STOPS = [
   { offset: "100%", color: "#ff8a3c" },
 ];
 
-const groupVariants = (shouldReduceMotion: boolean): Variants => ({
+const groupVariants = (shouldReduceMotion: boolean, startDelay: number): Variants => ({
   hidden: {},
   visible: {
     transition: shouldReduceMotion
-      ? { duration: 0.4, ease: EASE_OUT_SOFT }
-      : { staggerChildren: 0.004, delayChildren: 0.6 },
+      ? { duration: 0.4, ease: EASE_OUT_SOFT, delay: startDelay }
+      : { staggerChildren: 0.004, delayChildren: startDelay },
   },
 });
 
@@ -39,7 +40,7 @@ const departmentVariants = (shouldReduceMotion: boolean): Variants =>
         },
       };
 
-export function FranceMap({ shouldReduceMotion, className }: FranceMapProps) {
+export function FranceMap({ shouldReduceMotion, className, startDelay = 0 }: FranceMapProps) {
   return (
     <svg viewBox={FRANCE_VIEWBOX} className={className} aria-hidden="true">
       <defs>
@@ -52,7 +53,7 @@ export function FranceMap({ shouldReduceMotion, className }: FranceMapProps) {
       <motion.g
         initial="hidden"
         animate="visible"
-        variants={groupVariants(shouldReduceMotion)}
+        variants={groupVariants(shouldReduceMotion, startDelay)}
         stroke="#0a0a0d"
         strokeWidth={1.4}
         strokeLinejoin="round"
