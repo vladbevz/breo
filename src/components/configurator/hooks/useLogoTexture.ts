@@ -63,7 +63,13 @@ export function useLogoTexture(): UseLogoTextureResult {
         canvas.height = height;
         const ctx = canvas.getContext("2d");
         if (!ctx) throw new Error("2D context unavailable");
-        ctx.drawImage(bitmap, 0, 0, width, height);
+        // Le Decal de drei projette la texture retournée à 180° et en miroir par
+        // rapport à l'image source (rotation 180° + mirroir horizontal = un
+        // simple flip vertical net) — on compense ici, uniquement pour la
+        // texture 3D (la miniature d'aperçu garde l'image telle qu'importée).
+        ctx.scale(1, -1);
+        ctx.drawImage(bitmap, 0, -height, width, height);
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
 
         const previewScale = Math.min(1, PREVIEW_DIMENSION / Math.max(bitmap.width, bitmap.height));
         const previewCanvas = document.createElement("canvas");

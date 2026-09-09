@@ -9,5 +9,5 @@ export const CONFIGURATOR_CONTENT: ConfiguratorContent = {
   eyebrow: "Configurateur 3D",
   title: "Composez votre t-shirt",
   instructions:
-    "Choisissez une couleur, importez votre logo, puis glissez-le directement sur le t-shirt pour le positionner.",
+    "Choisissez une couleur, importez votre logo, puis glissez-le sur le t-shirt pour le positionner. Faites glisser le t-shirt ailleurs pour le faire pivoter, par exemple pour flocage au dos.",
 };

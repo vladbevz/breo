@@ -4,7 +4,7 @@ export function StudioLighting() {
   return (
     <>
       <Environment preset="studio" background={false} />
-      <directionalLight intensity={0.6} position={[3, 4, 2]} castShadow />
+      <directionalLight intensity={0.6} position={[3, 4, 2]} />
       <ambientLight intensity={0.3} />
       <ContactShadows
         position={[0, -0.4, 0]}

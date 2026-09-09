@@ -25,7 +25,7 @@ export function Canvas3D() {
 
   return (
     <div className="relative h-full w-full" style={{ touchAction: "none" }}>
-      <Canvas gl={{ alpha: true, antialias: true }} camera={{ position: [0, 0, 0.9], fov: 35 }} shadows>
+      <Canvas gl={{ alpha: true, antialias: true }} camera={{ position: [0, 0, 0.9], fov: 35 }}>
         <Suspense fallback={null}>
           <StudioLighting />
           <ShirtModel />
