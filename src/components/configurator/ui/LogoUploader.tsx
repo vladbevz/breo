@@ -6,7 +6,7 @@ import { useLogoTexture } from "../hooks/useLogoTexture";
 
 export function LogoUploader() {
   const { dispatch } = useConfigurator();
-  const { texture, error, isLoading, loadFile, clear } = useLogoTexture();
+  const { texture, previewUrl, error, isLoading, loadFile, clear } = useLogoTexture();
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -18,55 +18,76 @@ export function LogoUploader() {
     if (file) loadFile(file);
   }
 
+  const fileInput = (
+    <input
+      ref={inputRef}
+      type="file"
+      accept="image/png,image/jpeg,image/webp"
+      className="sr-only"
+      onChange={(event) => handleFiles(event.target.files)}
+    />
+  );
+
   return (
     <div>
       <p className="font-body text-xs tracking-[0.2em] text-bone-dim uppercase">Votre logo</p>
 
-      <div
-        role="button"
-        tabIndex={0}
-        onClick={() => inputRef.current?.click()}
-        onKeyDown={(event) => {
-          if (event.key === "Enter" || event.key === " ") {
+      {texture && previewUrl ? (
+        <div className="mt-3 flex items-center gap-3 rounded-2xl border border-bone/15 px-4 py-3">
+          {/* eslint-disable-next-line @next/next/no-img-element -- aperçu local d'un fichier importé par l'utilisateur, jamais hébergé */}
+          <img
+            src={previewUrl}
+            alt="Aperçu du logo importé"
+            className="h-10 w-10 rounded-md border border-bone/10 bg-ink-soft object-contain"
+          />
+          <p className="flex-1 font-body text-sm text-bone">Logo importé</p>
+          <button
+            type="button"
+            onClick={() => inputRef.current?.click()}
+            className="font-body text-xs text-bone-dim underline decoration-bone-dim underline-offset-4 hover:decoration-orange"
+          >
+            Changer
+          </button>
+          <button
+            type="button"
+            onClick={clear}
+            className="font-body text-xs text-bone-dim underline decoration-bone-dim underline-offset-4 hover:decoration-orange"
+          >
+            Retirer
+          </button>
+          {fileInput}
+        </div>
+      ) : (
+        <div
+          role="button"
+          tabIndex={0}
+          onClick={() => inputRef.current?.click()}
+          onKeyDown={(event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              inputRef.current?.click();
+            }
+          }}
+          onDragOver={(event) => event.preventDefault()}
+          onDrop={(event) => {
             event.preventDefault();
-            inputRef.current?.click();
-          }
-        }}
-        onDragOver={(event) => event.preventDefault()}
-        onDrop={(event) => {
-          event.preventDefault();
-          handleFiles(event.dataTransfer.files);
-        }}
-        className="group relative mt-3 flex cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-bone/20 px-6 py-8 text-center transition-colors duration-300 hover:border-bone/40"
-      >
-        <span
-          aria-hidden="true"
-          className="ring-signature pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-60 group-focus-visible:opacity-100"
-        />
-        <p className="relative font-body text-sm text-bone">
-          {isLoading ? "Import en cours…" : "Glissez une image ou cliquez pour choisir un fichier"}
-        </p>
-        <p className="relative font-body text-xs text-bone-dim">PNG, JPG ou WebP</p>
-        <input
-          ref={inputRef}
-          type="file"
-          accept="image/png,image/jpeg,image/webp"
-          className="sr-only"
-          onChange={(event) => handleFiles(event.target.files)}
-        />
-      </div>
+            handleFiles(event.dataTransfer.files);
+          }}
+          className="group relative mt-3 flex cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-bone/20 px-6 py-6 text-center transition-colors duration-300 hover:border-bone/40"
+        >
+          <span
+            aria-hidden="true"
+            className="ring-signature pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-60 group-focus-visible:opacity-100"
+          />
+          <p className="relative font-body text-sm text-bone">
+            {isLoading ? "Import en cours…" : "Glissez une image ou cliquez pour choisir un fichier"}
+          </p>
+          <p className="relative font-body text-xs text-bone-dim">PNG, JPG ou WebP</p>
+          {fileInput}
+        </div>
+      )}
 
       {error ? <p className="mt-2 font-body text-xs text-orange">{error}</p> : null}
-
-      {texture ? (
-        <button
-          type="button"
-          onClick={clear}
-          className="mt-2 font-body text-xs text-bone-dim underline decoration-bone-dim underline-offset-4 hover:decoration-orange"
-        >
-          Retirer le logo
-        </button>
-      ) : null}
     </div>
   );
 }

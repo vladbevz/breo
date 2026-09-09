@@ -4,11 +4,13 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 
 const MAX_DIMENSION = 1536;
+const PREVIEW_DIMENSION = 96;
 const MAX_FILE_SIZE = 20 * 1024 * 1024;
 const ACCEPTED_TYPES = ["image/png", "image/jpeg", "image/webp"];
 
 type UseLogoTextureResult = {
   texture: THREE.CanvasTexture | null;
+  previewUrl: string | null;
   error: string | null;
   isLoading: boolean;
   loadFile: (file: File) => void;
@@ -17,6 +19,7 @@ type UseLogoTextureResult = {
 
 export function useLogoTexture(): UseLogoTextureResult {
   const [texture, setTexture] = useState<THREE.CanvasTexture | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const textureRef = useRef<THREE.CanvasTexture | null>(null);
@@ -31,6 +34,7 @@ export function useLogoTexture(): UseLogoTextureResult {
     textureRef.current?.dispose();
     textureRef.current = null;
     setTexture(null);
+    setPreviewUrl(null);
     setError(null);
   }, []);
 
@@ -60,6 +64,16 @@ export function useLogoTexture(): UseLogoTextureResult {
         const ctx = canvas.getContext("2d");
         if (!ctx) throw new Error("2D context unavailable");
         ctx.drawImage(bitmap, 0, 0, width, height);
+
+        const previewScale = Math.min(1, PREVIEW_DIMENSION / Math.max(bitmap.width, bitmap.height));
+        const previewCanvas = document.createElement("canvas");
+        previewCanvas.width = Math.round(bitmap.width * previewScale);
+        previewCanvas.height = Math.round(bitmap.height * previewScale);
+        const previewCtx = previewCanvas.getContext("2d");
+        if (previewCtx) {
+          previewCtx.drawImage(bitmap, 0, 0, previewCanvas.width, previewCanvas.height);
+        }
+
         bitmap.close();
 
         const nextTexture = new THREE.CanvasTexture(canvas);
@@ -69,6 +83,7 @@ export function useLogoTexture(): UseLogoTextureResult {
         textureRef.current?.dispose();
         textureRef.current = nextTexture;
         setTexture(nextTexture);
+        setPreviewUrl(previewCtx ? previewCanvas.toDataURL() : null);
       })
       .catch(() => {
         setError("Impossible de lire cette image.");
@@ -78,5 +93,5 @@ export function useLogoTexture(): UseLogoTextureResult {
       });
   }, []);
 
-  return { texture, error, isLoading, loadFile, clear };
+  return { texture, previewUrl, error, isLoading, loadFile, clear };
 }

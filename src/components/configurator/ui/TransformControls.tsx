@@ -21,7 +21,7 @@ export function TransformControls() {
         </button>
       </div>
 
-      <div className="mt-3 flex flex-col gap-4">
+      <div className="mt-3 grid grid-cols-2 gap-x-4 gap-y-3">
         <label className="flex flex-col gap-1 font-body text-xs text-bone-dim">
           Horizontal
           <input

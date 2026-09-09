@@ -23,7 +23,15 @@ export function ShirtModel() {
 
   // Le matériau est mis en cache par useGLTF entre les montages : on le clone une
   // seule fois pour pouvoir muter sa couleur sans affecter d'autres instances.
-  const material = useMemo(() => materials.lambert1.clone(), [materials]);
+  // roughness/metalness sont fixés à la création (le glb n'en fournit pas
+  // d'explicites, ce qui sous l'environnement "studio" donne un rendu
+  // plastique/brillant — le coton est mat et non métallique).
+  const material = useMemo(() => {
+    const cloned = materials.lambert1.clone();
+    cloned.roughness = 0.95;
+    cloned.metalness = 0;
+    return cloned;
+  }, [materials]);
   material.color.set(state.color);
 
   useEffect(() => {
