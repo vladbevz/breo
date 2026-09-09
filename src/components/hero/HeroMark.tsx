@@ -1,6 +1,8 @@
+import Image from "next/image";
 import { motion, type Variants } from "framer-motion";
 import { EASE_OUT_SOFT } from "@/lib/motion";
 import { FranceMap } from "./FranceMap";
+import logoMark from "../../../public/logo-mark.png";
 
 type HeroMarkProps = {
   graphicVariants: Variants;
@@ -15,18 +17,20 @@ export function HeroMark({ graphicVariants, shouldReduceMotion, trustLine }: Her
     // lg+ pour que leurs enfants réintègrent directement le flow vertical du parent.
     <div className="relative mt-10 flex flex-row items-start justify-center gap-6 lg:mt-0 lg:flex-col lg:items-center lg:text-center">
       <div className="flex flex-1 flex-col items-center lg:contents">
-        {/* w-fit : sans ça un span/p en display:block s'étire sur toute la largeur du
-            conteneur, et le dégradé 0-100% se dilue sur cette largeur invisible au lieu
-            de suivre le tracé réel du glyphe — d'où un rendu presque uniformément violet. */}
-        <motion.span
+        <motion.div
           variants={graphicVariants}
           initial="hidden"
           animate="visible"
           aria-hidden="true"
-          className="text-signature pointer-events-none block w-fit select-none font-display text-[4.5rem] leading-none font-semibold sm:text-[6rem] lg:text-[8rem]"
+          className="pointer-events-none w-fit select-none"
         >
-          F
-        </motion.span>
+          <Image
+            src={logoMark}
+            alt=""
+            priority
+            className="h-18 w-auto sm:h-24 lg:h-32"
+          />
+        </motion.div>
 
         <motion.p
           initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 10 }}
