@@ -114,3 +114,34 @@ export function getServiceCardVariants(shouldReduceMotion: boolean): Variants {
     },
   };
 }
+
+export function getContactPanelVariants(shouldReduceMotion: boolean): Variants {
+  return {
+    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 16, scale: shouldReduceMotion ? 1 : 0.98 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: { duration: shouldReduceMotion ? 0.3 : 0.5, ease: EASE_SIGNATURE },
+    },
+    exit: {
+      opacity: 0,
+      y: shouldReduceMotion ? 0 : -12,
+      scale: shouldReduceMotion ? 1 : 0.98,
+      transition: { duration: 0.3, ease: EASE_OUT_SOFT },
+    },
+  };
+}
+
+export function getContactCheckmarkVariants(shouldReduceMotion: boolean): Variants {
+  if (shouldReduceMotion) {
+    return {
+      hidden: { pathLength: 1, opacity: 0 },
+      visible: { pathLength: 1, opacity: 1, transition: { duration: 0.3, ease: EASE_OUT_SOFT } },
+    };
+  }
+  return {
+    hidden: { pathLength: 0, opacity: 1 },
+    visible: { pathLength: 1, opacity: 1, transition: { duration: 0.6, ease: EASE_SIGNATURE, delay: 0.2 } },
+  };
+}

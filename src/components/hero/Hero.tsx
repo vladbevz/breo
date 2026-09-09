@@ -32,6 +32,7 @@ export function Hero() {
 
   return (
     <section
+      id="hero"
       ref={heroRef}
       className="grain relative isolate overflow-hidden px-6 pt-24 pb-16 sm:px-10 lg:grid lg:min-h-[92vh] lg:grid-cols-12 lg:items-center lg:gap-x-8 lg:pt-20"
     >
