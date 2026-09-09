@@ -17,10 +17,14 @@ export function SideNav() {
 
   return (
     <nav aria-label="Navigation de la page" className="fixed top-1/2 right-8 z-40 hidden -translate-y-1/2 lg:block">
-      <div className="relative flex flex-col items-center gap-8">
-        <span className="absolute top-1 left-1/2 bottom-1 w-px -translate-x-1/2 bg-bone/15" aria-hidden="true" />
+      {/* items-end : chaque ligne [lettres][point] s'aligne sur son bord droit, donc
+          les points partagent tous le même axe vertical — c'est CET axe (pas le
+          centre des lettres) que le trait/track doit suivre, sinon il traverse le
+          texte. */}
+      <div className="relative flex flex-col items-end gap-8">
+        <span className="absolute top-1 right-0.75 bottom-1 w-px bg-bone/15" aria-hidden="true" />
         <motion.span
-          className="absolute top-1 left-1/2 w-px -translate-x-1/2 rule-signature"
+          className="absolute top-1 right-0.75 w-px rule-signature"
           aria-hidden="true"
           initial={false}
           animate={{ height: `${fillHeight}%` }}
@@ -30,13 +34,7 @@ export function SideNav() {
         {NAV_ITEMS.map((item, index) => {
           const isActive = index === activeIndex;
           return (
-            <a key={item.id} href={item.href} className="group relative flex flex-col items-center gap-3">
-              <span
-                aria-hidden="true"
-                className={`h-2 w-2 shrink-0 rounded-full transition-transform duration-300 ${
-                  isActive ? "rule-signature scale-125" : "bg-bone/30"
-                }`}
-              />
+            <a key={item.id} href={item.href} className="group relative flex items-center gap-3">
               <span className="flex flex-col items-center gap-0.75">
                 {item.label.split("").map((letter, letterIndex) => (
                   <span
@@ -49,6 +47,12 @@ export function SideNav() {
                   </span>
                 ))}
               </span>
+              <span
+                aria-hidden="true"
+                className={`h-2 w-2 shrink-0 rounded-full transition-transform duration-300 ${
+                  isActive ? "rule-signature scale-125" : "bg-bone/30"
+                }`}
+              />
             </a>
           );
         })}
