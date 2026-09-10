@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { clashDisplay, generalSans } from "@/lib/fonts";
+import { Footer } from "@/components/footer/Footer";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -35,6 +36,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col bg-ink text-bone font-body">
         {children}
+        <Footer />
       </body>
     </html>
   );

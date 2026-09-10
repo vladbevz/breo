@@ -133,6 +133,17 @@ export function getContactPanelVariants(shouldReduceMotion: boolean): Variants {
   };
 }
 
+export function getFooterVariants(shouldReduceMotion: boolean): Variants {
+  return {
+    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 18 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: shouldReduceMotion ? 0.3 : 0.6, ease: EASE_OUT_SOFT },
+    },
+  };
+}
+
 export function getContactCheckmarkVariants(shouldReduceMotion: boolean): Variants {
   if (shouldReduceMotion) {
     return {
