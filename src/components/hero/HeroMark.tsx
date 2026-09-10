@@ -21,25 +21,15 @@ export function HeroMark({ graphicVariants, shouldReduceMotion, trustLine }: Her
           variants={graphicVariants}
           initial="hidden"
           animate="visible"
-          aria-hidden="true"
           className="pointer-events-none w-fit select-none"
         >
           <Image
             src={logoMark}
-            alt=""
+            alt="Flocage By Breo"
             priority
-            className="h-18 w-auto sm:h-24 lg:h-32"
+            className="h-28 w-auto sm:h-36 lg:h-48"
           />
         </motion.div>
-
-        <motion.p
-          initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: shouldReduceMotion ? 0.3 : 0.5, ease: EASE_OUT_SOFT, delay: 0.45 }}
-          className="text-signature -mt-1 w-fit font-display text-base font-semibold tracking-[0.1em] uppercase sm:text-xl lg:-mt-2 lg:text-3xl lg:tracking-[0.15em]"
-        >
-          by BREO
-        </motion.p>
       </div>
 
       <div className="mt-1 flex flex-1 flex-col items-center lg:contents">
