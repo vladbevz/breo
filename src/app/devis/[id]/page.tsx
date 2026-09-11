@@ -35,7 +35,13 @@ export default async function DevisPage({ params }: DevisPageProps) {
 
             {design.preview_url ? (
               <div className="relative mt-6 aspect-square w-full max-w-xs overflow-hidden rounded-3xl border border-bone/10 bg-ink-soft">
-                <Image src={design.preview_url} alt="Aperçu de votre modèle personnalisé" fill className="object-contain" />
+                <Image
+                  src={design.preview_url}
+                  alt="Aperçu de votre modèle personnalisé"
+                  fill
+                  sizes="(min-width: 640px) 320px, 100vw"
+                  className="object-contain"
+                />
               </div>
             ) : null}
           </div>

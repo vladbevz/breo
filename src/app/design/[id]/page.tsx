@@ -28,7 +28,13 @@ export default async function DesignPage({ params }: DesignPageProps) {
         <div className="max-w-4xl lg:grid lg:grid-cols-12 lg:gap-x-12 lg:items-center">
           {design.preview_url ? (
             <div className="relative aspect-square w-full max-w-md overflow-hidden rounded-3xl border border-bone/10 bg-ink-soft lg:col-span-6">
-              <Image src={design.preview_url} alt="Aperçu du modèle partagé" fill className="object-contain" />
+              <Image
+                src={design.preview_url}
+                alt="Aperçu du modèle partagé"
+                fill
+                sizes="(min-width: 1024px) 448px, 100vw"
+                className="object-contain"
+              />
             </div>
           ) : null}
 

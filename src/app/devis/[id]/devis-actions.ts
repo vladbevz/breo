@@ -1,6 +1,6 @@
 "use server";
 
-import { Resend } from "resend";
+import { getBrevoClient, getBrevoSender } from "@/lib/brevo";
 import { getDesign } from "@/lib/designs";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { devisFormSchema, type DevisFormValues } from "./devis-schema";
@@ -40,42 +40,46 @@ export async function submitDevis(id: string, input: DevisFormValues): Promise<D
     return { success: false, error: "Cette fonctionnalité n'est pas encore configurée. Contactez-nous directement." };
   }
 
-  const apiKey = process.env.RESEND_API_KEY;
-  const fromAddress = process.env.RESEND_FROM_EMAIL;
   const notificationTo = process.env.CONTACT_NOTIFICATION_EMAIL;
-
-  if (!apiKey || !fromAddress || !notificationTo) {
-    console.error(
-      "[devis-actions] missing env vars: RESEND_API_KEY / RESEND_FROM_EMAIL / CONTACT_NOTIFICATION_EMAIL",
-    );
+  if (!notificationTo) {
+    console.error("[devis-actions] missing env var: CONTACT_NOTIFICATION_EMAIL");
     // La demande est deja enregistree en base -- le lead n'est pas perdu, seul
     // l'email echoue silencieusement du point de vue de l'utilisateur.
     return { success: true };
   }
 
-  const resend = new Resend(apiKey);
+  let brevo, sender;
+  try {
+    brevo = getBrevoClient();
+    sender = getBrevoSender();
+  } catch (error) {
+    console.error("[devis-actions] Brevo not configured:", error);
+    return { success: true };
+  }
 
   const notification = buildDevisNotificationEmail(design, data);
-  const notificationResult = await resend.emails.send({
-    from: fromAddress,
-    to: notificationTo,
-    replyTo: data.email,
-    subject: notification.subject,
-    html: notification.html,
-  });
-  if (notificationResult.error) {
-    console.error("[devis-actions] notification email failed:", notificationResult.error);
+  try {
+    await brevo.transactionalEmails.sendTransacEmail({
+      sender,
+      to: [{ email: notificationTo }],
+      replyTo: { email: data.email },
+      subject: notification.subject,
+      htmlContent: notification.html,
+    });
+  } catch (error) {
+    console.error("[devis-actions] notification email failed:", error);
   }
 
   const confirmation = buildDevisConfirmationEmail(data);
-  const confirmationResult = await resend.emails.send({
-    from: fromAddress,
-    to: data.email,
-    subject: confirmation.subject,
-    html: confirmation.html,
-  });
-  if (confirmationResult.error) {
-    console.error("[devis-actions] confirmation email failed:", confirmationResult.error);
+  try {
+    await brevo.transactionalEmails.sendTransacEmail({
+      sender,
+      to: [{ email: data.email, name: data.name }],
+      subject: confirmation.subject,
+      htmlContent: confirmation.html,
+    });
+  } catch (error) {
+    console.error("[devis-actions] confirmation email failed:", error);
   }
 
   return { success: true };
@@ -87,13 +91,15 @@ export async function resendDevisConfirmation(id: string): Promise<DevisSubmitRe
     return { success: false, error: "Aucune demande trouvée pour cette référence." };
   }
 
-  const apiKey = process.env.RESEND_API_KEY;
-  const fromAddress = process.env.RESEND_FROM_EMAIL;
-  if (!apiKey || !fromAddress) {
+  let brevo, sender;
+  try {
+    brevo = getBrevoClient();
+    sender = getBrevoSender();
+  } catch (error) {
+    console.error("[devis-actions] Brevo not configured:", error);
     return { success: false, error: "Cette fonctionnalité n'est pas encore configurée. Contactez-nous directement." };
   }
 
-  const resend = new Resend(apiKey);
   const confirmation = buildDevisConfirmationEmail({
     name: design.contact_name,
     company: design.contact_company ?? "",
@@ -102,15 +108,15 @@ export async function resendDevisConfirmation(id: string): Promise<DevisSubmitRe
     message: design.contact_message ?? "",
   });
 
-  const result = await resend.emails.send({
-    from: fromAddress,
-    to: design.contact_email,
-    subject: confirmation.subject,
-    html: confirmation.html,
-  });
-
-  if (result.error) {
-    console.error("[devis-actions] resend confirmation failed:", result.error);
+  try {
+    await brevo.transactionalEmails.sendTransacEmail({
+      sender,
+      to: [{ email: design.contact_email, name: design.contact_name }],
+      subject: confirmation.subject,
+      htmlContent: confirmation.html,
+    });
+  } catch (error) {
+    console.error("[devis-actions] resend confirmation failed:", error);
     return { success: false, error: "L'envoi a échoué. Réessayez dans un instant." };
   }
 
