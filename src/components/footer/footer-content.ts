@@ -5,6 +5,7 @@ export type FooterLink = { label: string; href: string };
 export type FooterContent = {
   tagline: string;
   tiktokHref: string;
+  instagramHref: string | null;
   navLinks: FooterLink[];
   legalLinks: FooterLink[];
   mapCredit: { label: string; href: string };
@@ -14,11 +15,12 @@ export type FooterContent = {
 export const FOOTER_CONTENT: FooterContent = {
   tagline: "Atelier de flocage textile — personnalisation et expédition partout en France.",
   tiktokHref: HERO_CONTENT.tiktokCta.href,
+  instagramHref: HERO_CONTENT.instagramCta.href,
   navLinks: [
     { label: "Accueil", href: "/" },
     { label: "Tarifs", href: "/#tarifs" },
     { label: "Contact", href: "/#contact" },
-    { label: "Configurateur 3D", href: "/configurateur" },
+    { label: "Configurateur 3D T-shirts", href: "/configurateur" },
   ],
   legalLinks: [
     { label: "Mentions légales", href: "/mentions-legales" },

@@ -20,6 +20,8 @@ export default async function ConfirmationPage({ params }: ConfirmationPageProps
 
   if (!design) notFound();
 
+  const whatsAppLink = buildWhatsAppLink(design.id);
+
   return (
     <main className="flex-1">
       <section className="grain relative isolate overflow-hidden px-6 py-24 sm:px-10 lg:py-32 lg:pr-28">
@@ -37,15 +39,28 @@ export default async function ConfirmationPage({ params }: ConfirmationPageProps
           </p>
 
           <div className="mt-10 flex flex-wrap items-center gap-4">
-            <Link
-              href={buildWhatsAppLink(design.id)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative inline-flex items-center justify-center overflow-hidden rounded-full px-7 py-3 font-body text-sm font-medium text-ink transition-transform duration-300 ease-out hover:scale-[1.02]"
-            >
-              <span className="absolute inset-0 rule-signature" aria-hidden="true" />
-              <span className="relative">Continuer sur WhatsApp</span>
-            </Link>
+            {whatsAppLink ? (
+              <Link
+                href={whatsAppLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative inline-flex items-center justify-center overflow-hidden rounded-full px-7 py-3 font-body text-sm font-medium text-ink transition-transform duration-300 ease-out hover:scale-[1.02]"
+              >
+                <span className="absolute inset-0 rule-signature" aria-hidden="true" />
+                <span className="relative">Continuer sur WhatsApp</span>
+              </Link>
+            ) : (
+              <span
+                aria-disabled="true"
+                title="Bientôt disponible"
+                className="inline-flex cursor-not-allowed items-center gap-2 rounded-full border border-bone/15 px-7 py-3 font-body text-sm font-medium text-bone-dim/50"
+              >
+                Continuer sur WhatsApp
+                <span className="rounded-full border border-bone/15 px-2 py-0.5 font-body text-[10px] font-semibold tracking-wide text-bone-dim/50 uppercase">
+                  Bientôt
+                </span>
+              </span>
+            )}
 
             <ResendEmailButton designId={design.id} />
           </div>

@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { motion, type Variants } from "framer-motion";
-import { TikTokIcon } from "@/components/icons/TikTokIcon";
+import { TikTokGlitchIcon } from "@/components/icons/TikTokGlitchIcon";
 import { InstagramIcon } from "@/components/icons/InstagramIcon";
+import { SocialButton } from "@/components/social/SocialButton";
 import type { HeroContent } from "./hero-content";
 
 type HeroActionsProps = {
@@ -29,41 +30,12 @@ export function HeroActions({
         <span className="relative">{primaryCta.label}</span>
       </Link>
 
-      <Link
-        href={tiktokCta.href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="inline-flex items-center justify-center gap-3 rounded-full bg-black px-7 py-3 font-body text-sm font-medium text-white transition-transform duration-300 ease-out hover:scale-[1.02]"
-      >
-        <span className="relative inline-flex h-4 w-4 shrink-0" aria-hidden="true">
-          <TikTokIcon className="absolute inset-0 h-4 w-4 translate-x-[-1.5px] -translate-y-px text-[#25f4ee]" />
-          <TikTokIcon className="absolute inset-0 h-4 w-4 translate-x-[1.5px] translate-y-px text-[#fe2c55]" />
-          <TikTokIcon className="relative h-4 w-4 text-white" />
-        </span>
-        {tiktokCta.label}
-      </Link>
-
-      {instagramCta.href ? (
-        <Link
-          href={instagramCta.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center justify-center gap-3 rounded-full bg-black px-7 py-3 font-body text-sm font-medium text-white transition-transform duration-300 ease-out hover:scale-[1.02]"
-        >
-          <InstagramIcon className="h-4 w-4 shrink-0" />
-          {instagramCta.label}
-        </Link>
-      ) : (
-        <span
-          aria-disabled="true"
-          title="Bientôt disponible"
-          className="inline-flex cursor-not-allowed items-center justify-center gap-3 rounded-full bg-black/40 px-7 py-3 font-body text-sm font-medium text-white/40"
-        >
-          <InstagramIcon className="h-4 w-4 shrink-0" />
-          {instagramCta.label}
-          <span className="font-body text-xs text-white/30">(bientôt)</span>
-        </span>
-      )}
+      <SocialButton href={tiktokCta.href} label={tiktokCta.label} icon={<TikTokGlitchIcon />} />
+      <SocialButton
+        href={instagramCta.href}
+        label={instagramCta.label}
+        icon={<InstagramIcon className="h-4 w-4 shrink-0" gradient={Boolean(instagramCta.href)} />}
+      />
 
       <Link
         href={configuratorCta.href}
