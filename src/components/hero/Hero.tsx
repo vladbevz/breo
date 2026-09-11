@@ -52,6 +52,7 @@ export function Hero() {
           <HeroActions
             primaryCta={HERO_CONTENT.primaryCta}
             tiktokCta={HERO_CONTENT.tiktokCta}
+            instagramCta={HERO_CONTENT.instagramCta}
             configuratorCta={HERO_CONTENT.configuratorCta}
             actionsVariants={actionsVariants}
           />

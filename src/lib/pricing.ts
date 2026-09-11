@@ -4,14 +4,20 @@ export type PricingTier = {
   pricePerUnit: number | null;
 };
 
-// Tarifs a confirmer avec Breo avant mise en ligne -- pricePerUnit reste `null` en
-// attendant, ce qui fait afficher "sur devis" partout au lieu d'un chiffre invente.
+// Prix du T-shirt (15 €) : donnée réelle du client, voir src/components/services/services-content.ts.
+// Les paliers restent à plat sur ce même prix pour l'instant -- aucun barème dégressif
+// chiffré n'a été communiqué (seule la mention "tarifs dégressifs possibles" existe dans
+// la grille tarifaire), donc on n'invente pas de remise par palier ; le disclaimer
+// ci-dessous renvoie ces cas vers le devis, où Breo peut négocier un vrai prix dégressif.
+const TSHIRT_UNIT_PRICE = 15;
+
 export const PRICING_TIERS: PricingTier[] = [
-  { min: 10, max: 24, pricePerUnit: null },
-  { min: 25, max: 49, pricePerUnit: null },
-  { min: 50, max: 99, pricePerUnit: null },
-  { min: 100, max: 249, pricePerUnit: null },
-  { min: 250, max: Infinity, pricePerUnit: null },
+  { min: 1, max: 9, pricePerUnit: TSHIRT_UNIT_PRICE },
+  { min: 10, max: 24, pricePerUnit: TSHIRT_UNIT_PRICE },
+  { min: 25, max: 49, pricePerUnit: TSHIRT_UNIT_PRICE },
+  { min: 50, max: 99, pricePerUnit: TSHIRT_UNIT_PRICE },
+  { min: 100, max: 249, pricePerUnit: TSHIRT_UNIT_PRICE },
+  { min: 250, max: Infinity, pricePerUnit: TSHIRT_UNIT_PRICE },
 ];
 
 export const PRICE_DISCLAIMER =

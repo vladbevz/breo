@@ -13,10 +13,23 @@ type QuantitySelectorProps = {
 };
 
 export function QuantitySelector({ designId, initialQuantity }: QuantitySelectorProps) {
-  const [quantity, setQuantity] = useState(initialQuantity ?? QUANTITY_OPTIONS[0]);
+  const startQuantity = initialQuantity ?? QUANTITY_OPTIONS[0];
+  const [quantity, setQuantity] = useState(startQuantity);
+  const [customInput, setCustomInput] = useState(String(startQuantity));
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
   const estimate = getPriceEstimate(quantity);
+
+  function selectPreset(option: number) {
+    setQuantity(option);
+    setCustomInput(String(option));
+  }
+
+  function handleCustomChange(value: string) {
+    setCustomInput(value);
+    const parsed = Number(value);
+    if (Number.isInteger(parsed) && parsed > 0) setQuantity(parsed);
+  }
 
   function handleContinue() {
     startTransition(async () => {
@@ -36,7 +49,7 @@ export function QuantitySelector({ designId, initialQuantity }: QuantitySelector
             <button
               key={option}
               type="button"
-              onClick={() => setQuantity(option)}
+              onClick={() => selectPreset(option)}
               className={`rounded-full border px-4 py-2 font-body text-sm transition-colors duration-300 ${
                 isActive ? "border-transparent text-ink rule-signature" : "border-bone/20 text-bone hover:border-bone/40"
               }`}
@@ -46,6 +59,18 @@ export function QuantitySelector({ designId, initialQuantity }: QuantitySelector
           );
         })}
       </div>
+
+      <label className="mt-4 flex items-center gap-3 font-body text-sm text-bone-dim">
+        Ou une quantité précise
+        <input
+          type="number"
+          min={1}
+          step={1}
+          value={customInput}
+          onChange={(event) => handleCustomChange(event.target.value)}
+          className="w-24 border-b border-bone/15 bg-transparent py-1 font-body text-sm text-bone focus:border-bone/40 focus:outline-none"
+        />
+      </label>
 
       <div className="mt-6 border-t border-bone/10 pt-6">
         <p className="font-display text-2xl font-semibold">

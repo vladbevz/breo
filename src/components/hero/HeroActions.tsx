@@ -1,16 +1,24 @@
 import Link from "next/link";
 import { motion, type Variants } from "framer-motion";
 import { TikTokIcon } from "@/components/icons/TikTokIcon";
+import { InstagramIcon } from "@/components/icons/InstagramIcon";
 import type { HeroContent } from "./hero-content";
 
 type HeroActionsProps = {
   primaryCta: HeroContent["primaryCta"];
   tiktokCta: HeroContent["tiktokCta"];
+  instagramCta: HeroContent["instagramCta"];
   configuratorCta: HeroContent["configuratorCta"];
   actionsVariants: Variants;
 };
 
-export function HeroActions({ primaryCta, tiktokCta, configuratorCta, actionsVariants }: HeroActionsProps) {
+export function HeroActions({
+  primaryCta,
+  tiktokCta,
+  instagramCta,
+  configuratorCta,
+  actionsVariants,
+}: HeroActionsProps) {
   return (
     <motion.div variants={actionsVariants} className="mt-10 flex flex-wrap items-center gap-5">
       <Link
@@ -34,6 +42,28 @@ export function HeroActions({ primaryCta, tiktokCta, configuratorCta, actionsVar
         </span>
         {tiktokCta.label}
       </Link>
+
+      {instagramCta.href ? (
+        <Link
+          href={instagramCta.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center justify-center gap-3 rounded-full bg-black px-7 py-3 font-body text-sm font-medium text-white transition-transform duration-300 ease-out hover:scale-[1.02]"
+        >
+          <InstagramIcon className="h-4 w-4 shrink-0" />
+          {instagramCta.label}
+        </Link>
+      ) : (
+        <span
+          aria-disabled="true"
+          title="Bientôt disponible"
+          className="inline-flex cursor-not-allowed items-center justify-center gap-3 rounded-full bg-black/40 px-7 py-3 font-body text-sm font-medium text-white/40"
+        >
+          <InstagramIcon className="h-4 w-4 shrink-0" />
+          {instagramCta.label}
+          <span className="font-body text-xs text-white/30">(bientôt)</span>
+        </span>
+      )}
 
       <Link
         href={configuratorCta.href}
