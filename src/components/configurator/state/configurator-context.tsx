@@ -3,6 +3,7 @@
 import { createContext, useContext, useMemo, useRef, useReducer, type Dispatch, type ReactNode, type RefObject } from "react";
 import type { ConfiguratorAction, ConfiguratorState, DecalTransform } from "./configurator-types";
 import { GARMENT_PALETTE } from "./palette";
+import { DEFAULT_GARMENT_TYPE } from "@/lib/pricing";
 
 export const DEFAULT_DECAL_TRANSFORM: DecalTransform = {
   position: [0, 0.02, 0.13],
@@ -12,6 +13,7 @@ export const DEFAULT_DECAL_TRANSFORM: DecalTransform = {
 
 const initialState: ConfiguratorState = {
   color: GARMENT_PALETTE[0].hex,
+  garmentType: DEFAULT_GARMENT_TYPE,
   logoTexture: null,
   logoFile: null,
   decalTransform: DEFAULT_DECAL_TRANSFORM,
@@ -22,6 +24,8 @@ function configuratorReducer(state: ConfiguratorState, action: ConfiguratorActio
   switch (action.type) {
     case "SET_COLOR":
       return { ...state, color: action.color };
+    case "SET_GARMENT_TYPE":
+      return { ...state, garmentType: action.garmentType };
     case "SET_LOGO_TEXTURE":
       return { ...state, logoTexture: action.texture, logoFile: action.file, decalTransform: DEFAULT_DECAL_TRANSFORM };
     case "DRAG_START":

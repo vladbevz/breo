@@ -1,5 +1,6 @@
 import type { Design } from "@/lib/designs";
 import { escapeHtml, wrapEmail, EMAIL_BONE_DIM as BONE_DIM } from "@/lib/email-template";
+import { getGarmentType } from "@/lib/pricing";
 import type { DevisFormValues } from "./devis-schema";
 
 export function buildDevisNotificationEmail(design: Design, data: DevisFormValues): { subject: string; html: string } {
@@ -15,6 +16,7 @@ export function buildDevisNotificationEmail(design: Design, data: DevisFormValue
       <tr><td style="padding:4px 0;color:${BONE_DIM};">Entreprise</td><td style="padding:4px 0;">${escapeHtml(data.company || "—")}</td></tr>
       <tr><td style="padding:4px 0;color:${BONE_DIM};">Email</td><td style="padding:4px 0;">${escapeHtml(data.email)}</td></tr>
       <tr><td style="padding:4px 0;color:${BONE_DIM};">Téléphone</td><td style="padding:4px 0;">${escapeHtml(data.phone || "—")}</td></tr>
+      <tr><td style="padding:4px 0;color:${BONE_DIM};">Qualité</td><td style="padding:4px 0;">${escapeHtml(getGarmentType(design.garment_type).label)}</td></tr>
       <tr><td style="padding:4px 0;color:${BONE_DIM};">Couleur</td><td style="padding:4px 0;">${escapeHtml(design.tshirt_color)}</td></tr>
       <tr><td style="padding:4px 0;color:${BONE_DIM};">Quantité</td><td style="padding:4px 0;">${design.quantity ?? "—"}</td></tr>
     </table>

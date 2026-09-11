@@ -3,6 +3,7 @@ import type { ConfiguratorContent } from "../configurator-content";
 import { useConfigurator } from "../state/configurator-context";
 import { ColorPicker } from "./ColorPicker";
 import { ContinueButton } from "./ContinueButton";
+import { GarmentTypePicker } from "./GarmentTypePicker";
 import { LogoUploader } from "./LogoUploader";
 import { TransformControls } from "./TransformControls";
 
@@ -36,6 +37,7 @@ export function ControlPanel({ content }: ControlPanelProps) {
         )}
       </div>
 
+      <GarmentTypePicker />
       <ColorPicker />
       <LogoUploader />
       <TransformControls />

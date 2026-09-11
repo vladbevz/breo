@@ -1,4 +1,5 @@
 import { getSupabaseServerClient } from "./supabase/server";
+import type { GarmentTypeId } from "./pricing";
 
 export type DesignStatus = "draft" | "submitted";
 
@@ -11,6 +12,7 @@ export type DecalTransformRecord = {
 export type Design = {
   id: string;
   tshirt_color: string;
+  garment_type: GarmentTypeId;
   logo_url: string | null;
   logo_position: DecalTransformRecord | null;
   preview_url: string | null;
@@ -29,7 +31,10 @@ export type Design = {
 // partage /design/[id] et la route API associee (voir supabase/migrations/0001_designs.sql
 // pour la note RLS : la policy SELECT autorise techniquement `select *`, donc c'est ce
 // select colonne-par-colonne qui protege les donnees de contact, pas la policy seule).
-export type PublicDesignFields = Pick<Design, "id" | "preview_url" | "tshirt_color" | "logo_position" | "quantity">;
+export type PublicDesignFields = Pick<
+  Design,
+  "id" | "preview_url" | "tshirt_color" | "garment_type" | "logo_position" | "quantity"
+>;
 
 export async function getDesign(id: string): Promise<Design | null> {
   try {
@@ -48,7 +53,7 @@ export async function getPublicDesignFields(id: string): Promise<PublicDesignFie
     const supabase = getSupabaseServerClient();
     const { data, error } = await supabase
       .from("designs")
-      .select("id, preview_url, tshirt_color, logo_position, quantity")
+      .select("id, preview_url, tshirt_color, garment_type, logo_position, quantity")
       .eq("id", id)
       .maybeSingle();
     if (error) throw error;

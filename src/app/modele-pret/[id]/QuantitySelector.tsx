@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { getPriceEstimate, PRICE_DISCLAIMER } from "@/lib/pricing";
+import { getPriceEstimate, PRICE_DISCLAIMER, type GarmentTypeId } from "@/lib/pricing";
 import { updateDesignQuantity } from "./actions";
 
 const QUANTITY_OPTIONS = [10, 25, 50, 100, 250];
@@ -10,15 +10,16 @@ const QUANTITY_OPTIONS = [10, 25, 50, 100, 250];
 type QuantitySelectorProps = {
   designId: string;
   initialQuantity: number | null;
+  garmentType: GarmentTypeId;
 };
 
-export function QuantitySelector({ designId, initialQuantity }: QuantitySelectorProps) {
+export function QuantitySelector({ designId, initialQuantity, garmentType }: QuantitySelectorProps) {
   const startQuantity = initialQuantity ?? QUANTITY_OPTIONS[0];
   const [quantity, setQuantity] = useState(startQuantity);
   const [customInput, setCustomInput] = useState(String(startQuantity));
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
-  const estimate = getPriceEstimate(quantity);
+  const estimate = getPriceEstimate(quantity, garmentType);
 
   function selectPreset(option: number) {
     setQuantity(option);
@@ -73,11 +74,7 @@ export function QuantitySelector({ designId, initialQuantity }: QuantitySelector
       </label>
 
       <div className="mt-6 border-t border-bone/10 pt-6">
-        <p className="font-display text-2xl font-semibold">
-          {estimate?.total !== null && estimate?.total !== undefined
-            ? `${estimate.total.toLocaleString("fr-FR")} €`
-            : "Sur devis"}
-        </p>
+        <p className="font-display text-2xl font-semibold">{estimate.total.toLocaleString("fr-FR")} €</p>
         <p className="mt-2 font-body text-xs text-bone-dim">{PRICE_DISCLAIMER}</p>
       </div>
 

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getDesign } from "@/lib/designs";
 import { GARMENT_PALETTE } from "@/components/configurator/state/palette";
+import { getGarmentType } from "@/lib/pricing";
 import { QuantitySelector } from "./QuantitySelector";
 
 export const metadata: Metadata = {
@@ -22,6 +23,7 @@ export default async function ModelePretPage({ params }: ModelePretPageProps) {
   if (!design) notFound();
 
   const colorLabel = GARMENT_PALETTE.find((color) => color.hex === design.tshirt_color)?.label ?? design.tshirt_color;
+  const garmentTypeLabel = getGarmentType(design.garment_type).label;
 
   return (
     <main className="flex-1">
@@ -40,7 +42,9 @@ export default async function ModelePretPage({ params }: ModelePretPageProps) {
               Votre modèle
             </p>
             <h1 className="mt-6 font-display text-4xl leading-[1.05] font-semibold sm:text-5xl">Prêt à personnaliser</h1>
-            <p className="mt-6 font-body text-base text-bone-dim">Couleur : {colorLabel}</p>
+            <p className="mt-6 font-body text-base text-bone-dim">
+              {garmentTypeLabel} — Couleur : {colorLabel}
+            </p>
 
             {design.preview_url ? (
               <div className="relative mt-6 aspect-square w-full max-w-sm overflow-hidden rounded-3xl border border-bone/10 bg-ink-soft">
@@ -56,7 +60,7 @@ export default async function ModelePretPage({ params }: ModelePretPageProps) {
           </div>
 
           <div className="mt-12 lg:col-span-5 lg:col-start-8 lg:mt-0">
-            <QuantitySelector designId={design.id} initialQuantity={design.quantity} />
+            <QuantitySelector designId={design.id} initialQuantity={design.quantity} garmentType={design.garment_type} />
           </div>
         </div>
       </section>

@@ -1,41 +1,41 @@
-export type PricingTier = {
-  min: number;
-  max: number;
-  pricePerUnit: number | null;
+export type GarmentTypeId = "standard" | "premium";
+
+export type GarmentType = {
+  id: GarmentTypeId;
+  label: string;
+  pricePerUnit: number;
 };
 
-// Prix du T-shirt (15 €) : donnée réelle du client, voir src/components/services/services-content.ts.
-// Les paliers restent à plat sur ce même prix pour l'instant -- aucun barème dégressif
-// chiffré n'a été communiqué (seule la mention "tarifs dégressifs possibles" existe dans
-// la grille tarifaire), donc on n'invente pas de remise par palier ; le disclaimer
-// ci-dessous renvoie ces cas vers le devis, où Breo peut négocier un vrai prix dégressif.
-const TSHIRT_UNIT_PRICE = 15;
-
-export const PRICING_TIERS: PricingTier[] = [
-  { min: 1, max: 9, pricePerUnit: TSHIRT_UNIT_PRICE },
-  { min: 10, max: 24, pricePerUnit: TSHIRT_UNIT_PRICE },
-  { min: 25, max: 49, pricePerUnit: TSHIRT_UNIT_PRICE },
-  { min: 50, max: 99, pricePerUnit: TSHIRT_UNIT_PRICE },
-  { min: 100, max: 249, pricePerUnit: TSHIRT_UNIT_PRICE },
-  { min: 250, max: Infinity, pricePerUnit: TSHIRT_UNIT_PRICE },
+// Données réelles du client (grille tarifaire) : le T-shirt existe en deux qualités,
+// chacune à un prix fixe -- voir src/components/services/services-content.ts pour la
+// grille complète. Pas de barème dégressif chiffré communiqué pour l'instant (seule la
+// mention "tarifs dégressifs possibles" existe) ; PRICE_DISCLAIMER renvoie ces cas vers
+// le devis plutôt que d'inventer une remise par palier.
+export const GARMENT_TYPES: GarmentType[] = [
+  { id: "standard", label: "T-shirt", pricePerUnit: 15 },
+  { id: "premium", label: "T-shirt Premium", pricePerUnit: 20 },
 ];
+
+export const DEFAULT_GARMENT_TYPE: GarmentTypeId = "standard";
+
+export function getGarmentType(id: GarmentTypeId): GarmentType {
+  return GARMENT_TYPES.find((candidate) => candidate.id === id) ?? GARMENT_TYPES[0];
+}
 
 export const PRICE_DISCLAIMER =
   "Estimation indicative — le tarif final dépend du textile, de la technique et du visuel. Pour les grandes quantités, un tarif dégressif s'applique.";
 
 export type PriceEstimate = {
-  tier: PricingTier;
-  pricePerUnit: number | null;
-  total: number | null;
+  garmentType: GarmentType;
+  pricePerUnit: number;
+  total: number;
 };
 
-export function getPriceEstimate(quantity: number): PriceEstimate | null {
-  const tier = PRICING_TIERS.find((candidate) => quantity >= candidate.min && quantity <= candidate.max);
-  if (!tier) return null;
-
+export function getPriceEstimate(quantity: number, garmentTypeId: GarmentTypeId): PriceEstimate {
+  const garmentType = getGarmentType(garmentTypeId);
   return {
-    tier,
-    pricePerUnit: tier.pricePerUnit,
-    total: tier.pricePerUnit !== null ? tier.pricePerUnit * quantity : null,
+    garmentType,
+    pricePerUnit: garmentType.pricePerUnit,
+    total: garmentType.pricePerUnit * quantity,
   };
 }

@@ -49,6 +49,7 @@ export async function saveDesign(state: ConfiguratorState, canvas: HTMLCanvasEle
     const { error: insertError } = await supabase.from("designs").insert({
       id,
       tshirt_color: state.color,
+      garment_type: state.garmentType,
       logo_url: logoUrl,
       logo_position: state.decalTransform,
       preview_url: previewUrl,

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPublicDesignFields } from "@/lib/designs";
 import { GARMENT_PALETTE } from "@/components/configurator/state/palette";
+import { getGarmentType } from "@/lib/pricing";
 
 export const metadata: Metadata = {
   title: "Un modèle Flocage By Breo",
@@ -21,6 +22,7 @@ export default async function DesignPage({ params }: DesignPageProps) {
   if (!design) notFound();
 
   const colorLabel = GARMENT_PALETTE.find((color) => color.hex === design.tshirt_color)?.label ?? design.tshirt_color;
+  const garmentTypeLabel = getGarmentType(design.garment_type).label;
 
   return (
     <main className="flex-1">
@@ -45,7 +47,7 @@ export default async function DesignPage({ params }: DesignPageProps) {
             </p>
             <h1 className="mt-6 font-display text-4xl leading-[1.05] font-semibold sm:text-5xl">Un modèle flocé sur mesure</h1>
             <p className="mt-6 font-body text-base text-bone-dim">
-              Couleur : {colorLabel}
+              {garmentTypeLabel} — Couleur : {colorLabel}
               {design.quantity ? ` — quantité envisagée : ${design.quantity}` : ""}
             </p>
 
