@@ -6,12 +6,12 @@ import { useLogoTexture } from "../hooks/useLogoTexture";
 
 export function LogoUploader() {
   const { dispatch } = useConfigurator();
-  const { texture, previewUrl, error, isLoading, loadFile, clear } = useLogoTexture();
+  const { texture, file, previewUrl, error, isLoading, loadFile, clear } = useLogoTexture();
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    dispatch({ type: "SET_LOGO_TEXTURE", texture });
-  }, [texture, dispatch]);
+    dispatch({ type: "SET_LOGO_TEXTURE", texture, file });
+  }, [texture, file, dispatch]);
 
   function handleFiles(files: FileList | null) {
     const file = files?.[0];

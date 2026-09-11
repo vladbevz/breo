@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { ConfiguratorContent } from "../configurator-content";
 import { useConfigurator } from "../state/configurator-context";
 import { ColorPicker } from "./ColorPicker";
+import { ContinueButton } from "./ContinueButton";
 import { LogoUploader } from "./LogoUploader";
 import { TransformControls } from "./TransformControls";
 
@@ -38,6 +39,7 @@ export function ControlPanel({ content }: ControlPanelProps) {
       <ColorPicker />
       <LogoUploader />
       <TransformControls />
+      <ContinueButton />
     </div>
   );
 }

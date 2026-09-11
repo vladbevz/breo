@@ -10,6 +10,7 @@ const ACCEPTED_TYPES = ["image/png", "image/jpeg", "image/webp"];
 
 type UseLogoTextureResult = {
   texture: THREE.CanvasTexture | null;
+  file: File | null;
   previewUrl: string | null;
   error: string | null;
   isLoading: boolean;
@@ -19,6 +20,7 @@ type UseLogoTextureResult = {
 
 export function useLogoTexture(): UseLogoTextureResult {
   const [texture, setTexture] = useState<THREE.CanvasTexture | null>(null);
+  const [file, setFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -34,6 +36,7 @@ export function useLogoTexture(): UseLogoTextureResult {
     textureRef.current?.dispose();
     textureRef.current = null;
     setTexture(null);
+    setFile(null);
     setPreviewUrl(null);
     setError(null);
   }, []);
@@ -89,6 +92,7 @@ export function useLogoTexture(): UseLogoTextureResult {
         textureRef.current?.dispose();
         textureRef.current = nextTexture;
         setTexture(nextTexture);
+        setFile(file);
         setPreviewUrl(previewCtx ? previewCanvas.toDataURL() : null);
       })
       .catch(() => {
@@ -99,5 +103,5 @@ export function useLogoTexture(): UseLogoTextureResult {
       });
   }, []);
 
-  return { texture, previewUrl, error, isLoading, loadFile, clear };
+  return { texture, file, previewUrl, error, isLoading, loadFile, clear };
 }

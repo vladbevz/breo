@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Preload, useProgress } from "@react-three/drei";
 import { useReducedMotion } from "framer-motion";
+import { useConfigurator } from "../state/configurator-context";
 import { CameraRig } from "./CameraRig";
 import { ShirtModel } from "./ShirtModel";
 import { StudioLighting } from "./StudioLighting";
@@ -22,10 +23,17 @@ function LoadingOverlay() {
 
 export function Canvas3D() {
   const shouldReduceMotion = Boolean(useReducedMotion());
+  const { canvasElRef } = useConfigurator();
 
   return (
     <div className="relative h-full w-full" style={{ touchAction: "none" }}>
-      <Canvas gl={{ alpha: true, antialias: true }} camera={{ position: [0, 0, 0.9], fov: 35 }}>
+      <Canvas
+        gl={{ alpha: true, antialias: true, preserveDrawingBuffer: true }}
+        camera={{ position: [0, 0, 0.9], fov: 35 }}
+        onCreated={(state) => {
+          canvasElRef.current = state.gl.domElement;
+        }}
+      >
         <Suspense fallback={null}>
           <StudioLighting />
           <ShirtModel />
