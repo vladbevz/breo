@@ -36,11 +36,15 @@ export function Hero() {
       ref={heroRef}
       className="grain relative isolate overflow-hidden px-6 pt-24 pb-16 sm:px-10 lg:pt-20 lg:pr-28"
     >
-      <div className="flex flex-col max-w-6xl lg:grid lg:min-h-[92vh] lg:grid-cols-12 lg:items-center lg:gap-x-8">
+      <div className="flex flex-col gap-10 max-w-6xl lg:grid lg:min-h-[92vh] lg:grid-cols-12 lg:items-center lg:gap-x-8">
         {/* order-* : le graphique passe visuellement en premier sur mobile (demande
             client) sans changer l'ordre du DOM — le H1 reste avant lui pour la
             lecture au clavier/lecteur d'écran. Sans effet en lg+ (placement par
-            col-start, pas par ordre de flux). */}
+            col-start, pas par ordre de flux).
+            gap-10 : en mobile (flex-col) c'est le seul espacement entre le bloc F/carte
+            et le bloc titre — sans lui ils se touchent directement (aucune marge propre
+            de part et d'autre). Sans effet en lg+ : les deux colonnes partagent la même
+            ligne de grille, il n'y a donc pas de deuxième rangée à espacer. */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
