@@ -73,14 +73,27 @@ export function Footer() {
       <div className="mt-16 max-w-6xl border-t border-bone/10 pt-6">
         <div className="flex flex-col gap-2 font-body text-xs text-bone-dim/60 sm:flex-row sm:items-center sm:justify-between">
           <p>© {year} Flocage By Breo. Tous droits réservés.</p>
-          <Link
-            href={FOOTER_CONTENT.mapCredit.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="transition-colors duration-300 hover:text-bone-dim"
-          >
-            {FOOTER_CONTENT.mapCredit.label}
-          </Link>
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+            <Link
+              href={FOOTER_CONTENT.siteCredit.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition-colors duration-300 hover:text-bone-dim"
+            >
+              {FOOTER_CONTENT.siteCredit.label}
+            </Link>
+            <span aria-hidden="true" className="text-bone-dim/30">
+              ·
+            </span>
+            <Link
+              href={FOOTER_CONTENT.mapCredit.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition-colors duration-300 hover:text-bone-dim"
+            >
+              {FOOTER_CONTENT.mapCredit.label}
+            </Link>
+          </div>
         </div>
       </div>
     </motion.footer>

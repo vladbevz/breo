@@ -9,6 +9,7 @@ export type FooterContent = {
   navLinks: FooterLink[];
   legalLinks: FooterLink[];
   mapCredit: { label: string; href: string };
+  siteCredit: { label: string; href: string };
 };
 
 // Copie provisoire — à valider avec le client avant mise en ligne.
@@ -28,4 +29,5 @@ export const FOOTER_CONTENT: FooterContent = {
     { label: "Confidentialité", href: "/confidentialite" },
   ],
   mapCredit: { label: "Carte de France : svg-maps.com (CC BY 4.0)", href: "https://svg-maps.com" },
+  siteCredit: { label: "Site créé par ateliercode.fr", href: "https://ateliercode.fr" },
 };
