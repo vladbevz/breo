@@ -1,7 +1,10 @@
 import type { LegalPageContent } from "./mentions-legales-content";
 
-// Donnees reelles du client (identite, modalites de paiement) ; le delai de
-// reclamation reste entre crochets -- pas encore communique.
+// Donnees reelles du client (identite, modalites de paiement). Le delai de
+// reclamation n'est pas un nombre de jours fixe par la loi pour une simple
+// reclamation -- seules les garanties legales ci-dessous ont une duree fixee par
+// le Code de la consommation / le Code civil ; le client a demande le "standard
+// legal" plutot qu'un delai contractuel invente.
 export const CGV_CONTENT: LegalPageContent = {
   eyebrow: "Conditions générales",
   heading: "Conditions Générales de Vente",
@@ -43,7 +46,10 @@ export const CGV_CONTENT: LegalPageContent = {
     },
     {
       heading: "Réclamations",
-      paragraphs: ["Toute réclamation doit être adressée via le formulaire de contact dans un délai de [délai] jours après réception de la commande."],
+      paragraphs: [
+        "Toute réclamation peut être adressée via le formulaire de contact.",
+        "Conformément à la garantie légale de conformité (articles L217-3 et suivants du Code de la consommation), vous disposez d'un délai de 2 ans à compter de la délivrance du produit pour agir en cas de défaut de conformité. Pour les vices cachés, l'article 1648 du Code civil prévoit un délai de 2 ans à compter de la découverte du vice.",
+      ],
     },
     {
       heading: "Droit applicable",
