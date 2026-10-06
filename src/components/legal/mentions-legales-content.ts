@@ -7,7 +7,10 @@ export type LegalPageContent = {
   sections: LegalSectionContent[];
 };
 
-// Copie provisoire — champs entre crochets à remplacer par les informations réelles du client avant mise en ligne.
+// Données réelles du client (SIREN/SIRET vérifiés), à l'exception des champs encore
+// entre crochets : l'adresse complète du siège (seule la commune est connue,
+// Freyming-Merlebach) et l'adresse exacte de l'hébergeur (à vérifier sur
+// vercel.com/legal avant mise en ligne).
 export const MENTIONS_LEGALES_CONTENT: LegalPageContent = {
   eyebrow: "Informations légales",
   heading: "Mentions légales",
@@ -16,19 +19,20 @@ export const MENTIONS_LEGALES_CONTENT: LegalPageContent = {
     {
       heading: "Éditeur du site",
       paragraphs: [
-        "[Raison sociale], [forme juridique] au capital de [montant] €, immatriculée au Registre du Commerce et des Sociétés sous le numéro SIRET [numéro SIRET].",
-        "Siège social : [adresse complète].",
-        "Numéro de TVA intracommunautaire : [numéro de TVA].",
+        "Flocage By Breo est exploité par Olivier Brennstuhl, entrepreneur individuel, immatriculé sous le numéro SIREN 848 650 602 et le numéro SIRET 848 650 602 00016.",
+        "Siège social : Freyming-Merlebach [adresse complète à compléter].",
+        "Numéro de TVA intracommunautaire : FR93 848650602.",
       ],
     },
     {
       heading: "Directeur de publication",
-      paragraphs: ["[Nom et prénom du directeur de publication]."],
+      paragraphs: ["Olivier Brennstuhl."],
     },
     {
       heading: "Hébergeur",
       paragraphs: [
-        "Ce site est hébergé par [nom de l'hébergeur], [adresse de l'hébergeur].",
+        "Ce site est hébergé par Vercel Inc. [adresse à vérifier sur vercel.com/legal].",
+        "Le nom de domaine est enregistré auprès d'OVH SAS, 2 rue Kellermann, 59100 Roubaix, France.",
       ],
     },
     {
@@ -39,7 +43,7 @@ export const MENTIONS_LEGALES_CONTENT: LegalPageContent = {
     },
     {
       heading: "Contact",
-      paragraphs: ["Pour toute question relative au site, utilisez le formulaire de contact ou écrivez à [adresse email de contact]."],
+      paragraphs: ["Pour toute question relative au site, utilisez le formulaire de contact ou écrivez à flocagebybreo@gmail.com."],
     },
   ],
 };

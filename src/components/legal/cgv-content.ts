@@ -1,6 +1,7 @@
 import type { LegalPageContent } from "./mentions-legales-content";
 
-// Copie provisoire — champs entre crochets à remplacer par les informations réelles du client avant mise en ligne.
+// Donnees reelles du client (identite) ; les modalites de paiement et le delai de
+// reclamation restent entre crochets -- pas encore communiques.
 export const CGV_CONTENT: LegalPageContent = {
   eyebrow: "Conditions générales",
   heading: "Conditions Générales de Vente",
@@ -9,7 +10,7 @@ export const CGV_CONTENT: LegalPageContent = {
     {
       heading: "Objet",
       paragraphs: [
-        "Les présentes conditions générales de vente définissent les modalités de commande, de production et de livraison des prestations de flocage textile proposées par [raison sociale].",
+        "Les présentes conditions générales de vente définissent les modalités de commande, de production et de livraison des prestations de flocage textile proposées par Olivier Brennstuhl, entrepreneur individuel exploitant Flocage By Breo (SIRET 848 650 602 00016).",
       ],
     },
     {
@@ -46,7 +47,7 @@ export const CGV_CONTENT: LegalPageContent = {
     },
     {
       heading: "Droit applicable",
-      paragraphs: ["Les présentes conditions sont soumises au droit français. Tout litige relève de la compétence des tribunaux de [ville]."],
+      paragraphs: ["Les présentes conditions sont soumises au droit français. Tout litige relève de la compétence des tribunaux français compétents."],
     },
   ],
 };

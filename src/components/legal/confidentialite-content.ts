@@ -1,6 +1,7 @@
 import type { LegalPageContent } from "./mentions-legales-content";
 
-// Copie provisoire — champs entre crochets à remplacer par les informations réelles du client avant mise en ligne.
+// Donnees reelles du client (identite, contact) ; la duree de conservation exacte
+// reste entre crochets -- pas encore communiquee.
 export const CONFIDENTIALITE_CONTENT: LegalPageContent = {
   eyebrow: "Données personnelles",
   heading: "Politique de confidentialité",
@@ -8,7 +9,9 @@ export const CONFIDENTIALITE_CONTENT: LegalPageContent = {
   sections: [
     {
       heading: "Responsable du traitement",
-      paragraphs: ["[Raison sociale], [adresse], est responsable du traitement des données collectées sur ce site."],
+      paragraphs: [
+        "Olivier Brennstuhl, entrepreneur individuel exploitant Flocage By Breo, Freyming-Merlebach [adresse complète à compléter], est responsable du traitement des données collectées sur ce site.",
+      ],
     },
     {
       heading: "Données collectées",
@@ -33,7 +36,7 @@ export const CONFIDENTIALITE_CONTENT: LegalPageContent = {
     {
       heading: "Vos droits",
       paragraphs: [
-        "Conformément au RGPD, vous disposez d'un droit d'accès, de rectification, de suppression et d'opposition sur vos données. Pour exercer ces droits, contactez [adresse email de contact].",
+        "Conformément au RGPD, vous disposez d'un droit d'accès, de rectification, de suppression et d'opposition sur vos données. Pour exercer ces droits, contactez flocagebybreo@gmail.com.",
       ],
     },
     {
