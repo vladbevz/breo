@@ -7,10 +7,9 @@ export type LegalPageContent = {
   sections: LegalSectionContent[];
 };
 
-// Données réelles du client (SIREN/SIRET vérifiés), à l'exception des champs encore
-// entre crochets : l'adresse complète du siège (seule la commune est connue,
-// Freyming-Merlebach) et l'adresse exacte de l'hébergeur (à vérifier sur
-// vercel.com/legal avant mise en ligne).
+// Données réelles du client (SIREN/SIRET + adresse du siège vérifiés). Adresse de
+// Vercel Inc. récupérée directement sur vercel.com/legal/privacy-policy (section
+// "Contact Us"), pas de mémoire -- à re-vérifier si cette page change.
 export const MENTIONS_LEGALES_CONTENT: LegalPageContent = {
   eyebrow: "Informations légales",
   heading: "Mentions légales",
@@ -20,7 +19,7 @@ export const MENTIONS_LEGALES_CONTENT: LegalPageContent = {
       heading: "Éditeur du site",
       paragraphs: [
         "Flocage By Breo est exploité par Olivier Brennstuhl, entrepreneur individuel, immatriculé sous le numéro SIREN 848 650 602 et le numéro SIRET 848 650 602 00016.",
-        "Siège social : Freyming-Merlebach [adresse complète à compléter].",
+        "Siège social : 115 rue de Bretagne, 57800 Freyming-Merlebach.",
         "Numéro de TVA intracommunautaire : FR93 848650602.",
       ],
     },
@@ -31,7 +30,7 @@ export const MENTIONS_LEGALES_CONTENT: LegalPageContent = {
     {
       heading: "Hébergeur",
       paragraphs: [
-        "Ce site est hébergé par Vercel Inc. [adresse à vérifier sur vercel.com/legal].",
+        "Ce site est hébergé par Vercel Inc., 440 N Barranca Avenue #4133, Covina, CA 91723, États-Unis.",
         "Le nom de domaine est enregistré auprès d'OVH SAS, 2 rue Kellermann, 59100 Roubaix, France.",
       ],
     },

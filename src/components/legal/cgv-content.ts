@@ -1,7 +1,7 @@
 import type { LegalPageContent } from "./mentions-legales-content";
 
-// Donnees reelles du client (identite) ; les modalites de paiement et le delai de
-// reclamation restent entre crochets -- pas encore communiques.
+// Donnees reelles du client (identite, modalites de paiement) ; le delai de
+// reclamation reste entre crochets -- pas encore communique.
 export const CGV_CONTENT: LegalPageContent = {
   eyebrow: "Conditions générales",
   heading: "Conditions Générales de Vente",
@@ -27,7 +27,7 @@ export const CGV_CONTENT: LegalPageContent = {
     },
     {
       heading: "Paiement",
-      paragraphs: ["Le paiement s'effectue selon les modalités précisées sur le devis : [modalités de paiement à préciser]."],
+      paragraphs: ["Le paiement s'effectue selon les modalités précisées sur le devis, établi individuellement pour chaque commande."],
     },
     {
       heading: "Livraison",

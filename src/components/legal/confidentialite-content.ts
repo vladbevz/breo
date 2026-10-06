@@ -1,7 +1,6 @@
 import type { LegalPageContent } from "./mentions-legales-content";
 
-// Donnees reelles du client (identite, contact) ; la duree de conservation exacte
-// reste entre crochets -- pas encore communiquee.
+// Donnees reelles du client (identite, adresse, contact, duree de conservation).
 export const CONFIDENTIALITE_CONTENT: LegalPageContent = {
   eyebrow: "Données personnelles",
   heading: "Politique de confidentialité",
@@ -10,7 +9,7 @@ export const CONFIDENTIALITE_CONTENT: LegalPageContent = {
     {
       heading: "Responsable du traitement",
       paragraphs: [
-        "Olivier Brennstuhl, entrepreneur individuel exploitant Flocage By Breo, Freyming-Merlebach [adresse complète à compléter], est responsable du traitement des données collectées sur ce site.",
+        "Olivier Brennstuhl, entrepreneur individuel exploitant Flocage By Breo, 115 rue de Bretagne, 57800 Freyming-Merlebach, est responsable du traitement des données collectées sur ce site.",
       ],
     },
     {
@@ -31,7 +30,7 @@ export const CONFIDENTIALITE_CONTENT: LegalPageContent = {
     },
     {
       heading: "Durée de conservation",
-      paragraphs: ["Les données sont conservées pendant [durée] à compter de votre dernière demande, sauf obligation légale contraire."],
+      paragraphs: ["Les données sont conservées pendant 1 mois à compter de votre dernière demande, sauf obligation légale contraire."],
     },
     {
       heading: "Vos droits",
